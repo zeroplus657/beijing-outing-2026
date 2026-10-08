@@ -28,7 +28,6 @@ function render() {
     if(stage.optional)heading.append(element('span','可选','optional'));
     content.append(heading,element('p',stage.note));card.append(content);row.append(card);return row;
   }));
-  $('#essential').textContent=plan.essential;
   $('#budget-note').textContent=plan.budgetNote;
   $('#costs').replaceChildren(...plan.costs.map(([name,low,high])=>{
     const row=element('li');row.append(element('span',name),element('span',low===high?`¥${low}`:`¥${low}—${high}`));return row;
@@ -52,6 +51,37 @@ const dateButton=$('#date-sticker');
 let userPaused=false;
 let replayFrame=0;
 let observer;
+let brandFlight;
+let brandAnimation;
+let brandPlayed=false;
+const brandTitle=$('#brand-title');
+
+function stopBrandFlight(){
+  brandAnimation?.cancel();brandAnimation=null;
+  brandFlight?.remove();brandFlight=null;
+  brandTitle.style.visibility='';
+}
+
+function playBrandFlight(done){
+  stopBrandFlight();
+  const slot=$('.brand-slot').getBoundingClientRect();
+  if(root.dataset.motion!=='on'||document.hidden||slot.bottom<0||slot.top>innerHeight){done();return;}
+  brandPlayed=true;
+  const style=getComputedStyle(brandTitle);
+  const font=Math.min(240,innerWidth*.135);
+  const full={left:'0px',top:'0px',width:`${innerWidth}px`,height:`${innerHeight}px`,fontSize:`${font}px`,padding:'0px',backgroundColor:'#071943',color:'#52f1ff',transform:'none',boxShadow:'0px 0px 0px #071943'};
+  const docked={left:`${slot.left}px`,top:`${slot.top}px`,width:`${brandTitle.offsetWidth}px`,height:`${brandTitle.offsetHeight}px`,fontSize:style.fontSize,padding:style.padding,backgroundColor:style.backgroundColor,color:style.color,transform:style.transform,boxShadow:style.boxShadow};
+  brandFlight=element('div',brandTitle.textContent,'brand-flight');
+  brandFlight.id='brand-flight';brandFlight.setAttribute('aria-hidden','true');
+  Object.assign(brandFlight.style,full);document.body.append(brandFlight);
+  brandTitle.style.visibility='hidden';
+  brandAnimation=brandFlight.animate([
+    {...full,offset:0},
+    {...full,fontSize:`${font*1.035}px`,offset:.16,easing:'cubic-bezier(.68,0,.16,1)'},
+    {...docked,offset:1},
+  ],{duration:850,easing:'linear',fill:'forwards'});
+  brandAnimation.onfinish=()=>{stopBrandFlight();done();};
+}
 
 function revealStops(){
   observer?.disconnect();
@@ -65,13 +95,18 @@ function revealStops(){
   document.querySelectorAll('#timeline li:not(.is-seen)').forEach(row=>observer.observe(row));
 }
 
-function replayIntro(){
+function replayIntro(withBrand=true){
   if(root.dataset.motion!=='on')return;
   cancelAnimationFrame(replayFrame);
+  stopBrandFlight();
   root.classList.remove('intro-play');
-  replayFrame=requestAnimationFrame(()=>{
-    replayFrame=requestAnimationFrame(()=>root.classList.add('intro-play'));
-  });
+  const enter=()=>{
+    if(root.dataset.motion!=='on')return;
+    replayFrame=requestAnimationFrame(()=>{
+      replayFrame=requestAnimationFrame(()=>root.classList.add('intro-play'));
+    });
+  };
+  if(withBrand)playBrandFlight(enter);else enter();
 }
 
 function syncMotion(){
@@ -84,14 +119,17 @@ function syncMotion(){
   dateButton.disabled=!enabled;
   dateButton.title=enabled?'重播入场动效':'2026年10月10日，周六';
   dateButton.setAttribute('aria-label',enabled?'10月10日，周六。重播入场动效':'10月10日，周六');
-  if(!enabled){cancelAnimationFrame(replayFrame);root.classList.remove('intro-play');}
+  if(!enabled){cancelAnimationFrame(replayFrame);stopBrandFlight();root.classList.remove('intro-play');}
   revealStops();
-  if(enabled)replayIntro();
+  if(enabled)replayIntro(!brandPlayed);
 }
 
 motionButton.hidden=false;
 motionButton.addEventListener('click',()=>{userPaused=!userPaused;syncMotion();});
-dateButton.addEventListener('click',replayIntro);
+dateButton.addEventListener('click',()=>replayIntro(true));
 reducedMotion.addEventListener('change',syncMotion);
-document.addEventListener('visibilitychange',()=>root.classList.toggle('page-hidden',document.hidden));
+document.addEventListener('visibilitychange',()=>{root.classList.toggle('page-hidden',document.hidden);if(document.hidden)stopBrandFlight();});
+window.addEventListener('resize',stopBrandFlight);
+window.addEventListener('scroll',()=>{if(brandFlight)stopBrandFlight();},{passive:true});
+document.addEventListener('keydown',event=>{if(event.key==='Escape')stopBrandFlight();});
 syncMotion();
