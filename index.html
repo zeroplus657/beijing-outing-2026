@@ -3,82 +3,36 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="10月10日市内聚会，18日香山或奥森一日行程。一起比较路线、估算预算、提出建议。">
+  <meta name="description" content="10月10日海淀桌游、唱歌与铜锅涮肉；18日颐和园散步。晚间回畅春新院附近。">
   <meta name="referrer" content="no-referrer">
-  <title>北京出行提案 · 10月10日 & 18日</title>
+  <title>北京一日出行 · 10月10日 / 18日</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%23233d35'/%3E%3Cpath d='M17 18v27h30M17 32h21V18' fill='none' stroke='%23fff' stroke-width='5'/%3E%3Ccircle cx='46' cy='18' r='6' fill='%23e77639'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="./style.css">
-  <script type="module" src="./app.js"></script>
+  <link rel="stylesheet" href="./style.css?v=display-2">
+  <script type="module" src="./app.js?v=display-2"></script>
 </head>
 <body>
-  <a href="#plans" class="skip-link">跳到行程</a>
-  <header class="topbar">
-    <a class="brand" href="./"><span class="brand-icon" aria-hidden="true">日</span>北京出行提案</a>
-    <nav aria-label="页面导航"><a href="#plans">看行程</a><a href="#suggestions">提建议</a><a href="#sources">查来源</a></nav>
-  </header>
   <main>
-    <section class="intro" aria-labelledby="page-title">
-      <div><p class="eyebrow">OCTOBER 2026 / 同学出行商量板</p><h1 id="page-title">约一天，<span>从白天到夜晚。</span></h1><p class="lead">10号在城里玩，18号去户外。先选路线，再把你的好主意加进来。</p></div>
-      <div class="intro-note"><span class="small-label">计划范围</span><strong>仅限北京市</strong><span>一日往返 · 不过夜 · 尚未预订</span></div>
-    </section>
-    <section id="plans" aria-label="出行方案">
-      <div class="date-switch" role="group" aria-label="选择出行日期">
-        <button class="date-card" data-day="10" aria-pressed="true"><span class="date-num">10<span>10月</span></span><span class="date-desc"><strong>在城里，聚一聚</strong><span>周六 · 完整一日活动</span></span><span class="date-tag">桌游 / 火锅 / KTV</span></button>
-        <button class="date-card" data-day="18" aria-pressed="false"><span class="date-num">18<span>10月</span></span><span class="date-desc"><strong>去户外，走一走</strong><span>周日 · 当天往返</span></span><span class="date-tag">香山 / 奥森备选</span></button>
-      </div>
-      <div class="notice" id="day-note"></div>
-      <div class="route-switch" id="route-switch" role="group" aria-label="选择路线"></div>
-      <div class="plan-layout">
-        <article class="route-panel" aria-labelledby="route-title">
-          <div class="route-heading"><div><p class="eyebrow" id="route-date"></p><h2 id="route-title"></h2></div><span class="route-stamp" id="route-effort"></span></div>
-          <p class="route-intro" id="route-intro"></p>
-          <div class="route-facts"><span id="route-duration"></span><span id="route-area"></span></div>
-          <div class="meeting"><span class="small-label">在哪里碰头</span><p id="route-meet"></p></div>
-          <ol class="timeline" id="timeline"></ol>
-          <details class="detail-block"><summary>怎么走 · 转场与返程</summary><p id="transport"></p><p class="muted">导航按钮使用高德北京地点检索。本文的转场时间为含集合缓冲的估算，不是实时路况。</p></details>
-          <details class="detail-block"><summary>如果下雨、满位或有人不想爬山</summary><p id="fallback"></p></details>
-          <div class="route-actions"><button class="button secondary" id="copy-plan">复制这条行程</button><a class="button primary" href="#suggestions" id="suggest-current">我有建议</a></div>
-          <p class="status" id="plan-status" role="status"></p>
-        </article>
-        <aside class="side-panel" aria-label="预算与出发准备">
-          <section class="budget-panel"><p class="eyebrow">每人预算 / 估算，非商家报价</p><p class="price" id="budget-total" aria-live="polite"></p><p class="muted">包括列出的用餐、活动和公共交通。不含酒水、额外购物及打车；出发地不同，交通费会变化。</p>
-            <div class="people-control"><label for="people">参加人数 <small>暂按15人</small></label><input id="people" type="number" value="15" min="2" max="40" step="1" inputmode="numeric"></div>
-            <label class="check-control"><input type="checkbox" id="extras" checked><span id="extras-label">含可选晚间环节</span></label>
-            <label class="check-control" id="evening-control"><input type="checkbox" id="evening"><span>10号只参加晚餐及晚间场</span></label>
-            <ul class="cost-list" id="cost-list"></ul>
-            <p class="budget-foot" id="budget-note"></p>
-          </section>
-          <section class="checklist-panel"><h3>先确认，再下单</h3><ul id="checklist"></ul><p class="muted">本页不售票、不收款，不代表商户确认。以最终报名、门店回复和当天官方通知为准。</p></section>
-        </aside>
-      </div>
-    </section>
-    <section class="suggestion-section" id="suggestions" aria-labelledby="suggestion-title">
-      <div class="section-heading"><div><p class="eyebrow">你的想法也算数</p><h2 id="suggestion-title">一起把行程定下来</h2></div><span class="section-index" aria-hidden="true">02</span></div>
-      <p class="section-intro">想换一家店、改个集合时间，或只参加某一段？写下来。推荐新地点请限定北京市，并附上高德、点评或美团链接。</p>
-      <div class="suggestion-grid">
-        <form id="suggestion-form" class="form-panel">
-          <div class="field-row"><label>出行日期<select id="form-day" name="day"><option value="10">2026年10月10日</option><option value="18">2026年10月18日</option></select></label><label>对应方案<select id="form-route" name="route"></select></label></div>
-          <div class="field-row"><label>怎么称呼你<input name="nickname" id="nickname" placeholder="昵称即可，不必真名" maxlength="20" required autocomplete="off"></label><label>想参加哪一段<select name="attendance"><option>全天</option><option>仅白天</option><option>仅晚餐及晚间</option><option>暂不确定，只提建议</option></select></label></div>
-          <div class="field-row"><label>建议类别<select name="category"><option>路线与地点</option><option>吃饭与忌口</option><option>桌游与KTV</option><option>时间与交通</option><option>预算与参加意向</option></select></label><label>北京市内区县<select name="district"><option>按现有路线</option> <option>海淀区</option><option>朝阳区</option><option>东城区</option><option>西城区</option><option>丰台区</option><option>石景山区</option><option>通州区</option><option>顺义区</option><option>昌平区</option><option>大兴区</option><option>房山区</option><option>门头沟区</option><option>怀柔区</option><option>平谷区</option><option>密云区</option><option>延庆区</option></select></label></div>
-          <label>你的建议<textarea name="message" id="message" rows="4" minlength="4" maxlength="400" placeholder="例如：18号我更倾向奥森，走路少一点；午餐可以自带。推荐的新地点请写清北京市内地址。" required></textarea></label>
-          <div class="field-row"><label>人均预算（选填）<input name="budget" placeholder="例如 150—200元" maxlength="30"></label><label>参考链接（选填）<input name="link" type="url" placeholder="https://…" maxlength="500"></label></div>
-          <label class="check-control privacy"><input name="consent" type="checkbox" required><span>我知道 GitHub 提交后，昵称、账号和建议会公开。不会填写手机号、微信号、住址或他人个人信息；具体过敏信息请私下联系组织者。</span></label>
-          <div class="form-actions"><button class="button primary" type="submit">预览并前往 GitHub 提交</button><button class="button secondary" id="copy-suggestion" type="button">复制建议发微信群</button></div>
-          <p class="muted form-help">共享留言需要 GitHub 账号，并在新页面点击提交才会保存。没有账号可复制到微信群，由组织者在获得同意后汇总；复制不会自动上传。</p>
-          <p id="form-status" class="status" role="status"></p>
-        </form>
-        <div class="board-panel"><div class="board-header"><h3>大家的建议</h3><button id="refresh-board" class="text-button" type="button">刷新</button></div><div class="board-filters" role="group" aria-label="按日期查看建议"><button data-filter="all" aria-pressed="true">全部</button><button data-filter="10" aria-pressed="false">10号</button><button data-filter="18" aria-pressed="false">18号</button></div><p class="muted" id="board-status" role="status">正在读取共享建议…</p><div id="board-list"></div><a id="all-issues" class="board-link" target="_blank" rel="noopener noreferrer">在 GitHub 查看全部建议与回复</a><p class="muted tiny-note">只展示公开提交，不伪造报名人数或投票。建议不等于确认报名；正式名单请在群内核实。</p></div>
-      </div>
-    </section>
-    <section id="sources" class="sources-section" aria-labelledby="sources-title">
-      <div class="section-heading"><div><p class="eyebrow">先查清楚，再出门</p><h2 id="sources-title">地点与信息来源</h2></div><span class="section-index" aria-hidden="true">03</span></div>
-      <p class="section-intro">核对日期：2026年10月7日。高德与点评用于核对候选地点，公园与政府网站用于核对票价、开放和交通。美团实时团购、营业状态与包间余量未确认，不作库存或价格承诺。</p>
-      <div class="source-grid" id="source-list"></div>
-      <div class="booking-guide"><h3>去美团／大众点评查什么？</h3><p>搜索上面完整店名，核对城市“北京”和门店地址。重点问：人数与可用包间、当天可用套餐、夜场时段、是否有最低消费或服务费、能否退改。页面参考价不等于这次实际报价。</p><p>出发前48小时再核对天气、景区公告与返程路线；10月18日的天气不提前作保证。</p></div>
-    </section>
+    <header class="page-heading"><h1>北京一日出行</h1><span>2026年10月</span></header>
+    <div class="date-tabs" role="group" aria-label="选择出行日期">
+      <button type="button" data-day="10" aria-pressed="true">10月10日 <span>周六 · 市内聚会</span></button>
+      <button type="button" data-day="18" aria-pressed="false">10月18日 <span>周日 · 湖边散步</span></button>
+    </div>
+    <article id="plan" aria-labelledby="plan-title">
+      <div class="plan-heading"><h2 id="plan-title"></h2><p id="plan-area"></p></div>
+      <div class="summary"><span id="plan-hours"></span><strong id="plan-budget"></strong></div>
+      <ol id="timeline" class="timeline"></ol>
+      <p id="essential" class="essential"></p>
+      <details id="details">
+        <summary>费用明细与地点参考</summary>
+        <ul id="costs" class="costs"></ul>
+        <p id="budget-note"></p>
+        <p>餐饮、娱乐和交通为估算，非商家报价；不含酒水、打车。</p>
+        <nav id="source-links" aria-label="地点与价格来源"></nav>
+        <p class="map-note">返程地图检索名：北京大学畅春新园。</p>
+      </details>
+    </article>
+    <footer>涮肉门店待定；转场时间为预留估算。</footer>
+    <noscript><p>请启用 JavaScript 查看两天行程。</p></noscript>
   </main>
-  <footer><span>北京出行提案 · 2026年10月</span><span>先商量，后预订。尽兴，也按时回家。</span></footer>
-  <dialog id="submit-dialog" aria-labelledby="dialog-title"><div class="dialog-inner"><h2 id="dialog-title">确认这条公开建议</h2><p>接下来会打开 GitHub。请登录后检查内容，再点击提交；本页不会自动替你发布。</p><pre id="suggestion-preview"></pre><div class="form-actions"><a id="submit-link" class="button primary" target="_blank" rel="noopener noreferrer">去 GitHub 确认提交</a><button id="close-dialog" class="button secondary" type="button">再改一下</button></div><p class="muted">在 GitHub 提交后，回到本页点“刷新”。链接打不开时可使用“复制建议发微信群”。</p></div></dialog>
-  <noscript><p class="noscript">本页需要 JavaScript 显示路线与建议。请使用启用 JavaScript 的浏览器；也可访问 <a href="https://github.com/zeroplus657/beijing-outing-2026">项目说明与建议区</a>。</p></noscript>
 </body>
 </html>
